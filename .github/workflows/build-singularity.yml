@@ -36,7 +36,8 @@ jobs:
       - name: Install Dependencies
         if: ${{ env.keepgoing == 'true' }}
         run: |
-          apt-get update && apt-get install -y \
+          # Slim image is Alpine based ?
+          sudo apk update && sudo apk add -y \
             build-essential \
             libssl-dev \
             uuid-dev \
