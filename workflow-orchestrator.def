@@ -1,0 +1,44 @@
+Bootstrap: docker
+From: python:3.9.17-slim
+Stage: build
+
+%setup
+
+%files
+    ./requirements.txt /home/requirements.txt
+
+%environment
+    export LC_ALL=C
+
+%post
+    echo "Installing gcc compiler"
+    apt -y update && apt install -y build-essential
+    echo "Upgrade pip"
+    pip install --upgrade pip
+    echo "Installing python requirements"
+    pip install -r /home/requirements.txt
+
+%runscript
+    python -V
+    echo "packages installed:"
+    cat /home/requirements.txt
+
+%startscript
+
+%test
+    grep -q NAME=\"Debian\ GNU/Linux\" /etc/os-release
+    if [ $? -eq 0 ]; then
+        echo "Container base is Debian GNU/Linux as expected."
+    else
+        echo "Container base is not Debian GNU/Linux."
+        exit 1
+    fi
+
+%labels
+    Author engarcia
+    Version v0.0.1
+
+%help
+    This is a small demo building an python environment derived from the
+    demo container used to illustrate a def file that uses all
+    supported sections.
