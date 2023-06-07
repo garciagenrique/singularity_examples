@@ -2,7 +2,7 @@ name: Singularity Build (manual)
 on: 
   push:
     branches:
-      - main
+      - singularity_ci # main
 
 jobs:
   build-test-containers:
