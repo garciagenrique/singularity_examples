@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        recipe: ["*.def"]
+        recipe: ["workflow-orchestrator.def"]
 
     name: Check ${{ matrix.recipe }}
     steps:
