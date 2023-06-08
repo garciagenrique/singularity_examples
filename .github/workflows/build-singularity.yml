@@ -90,18 +90,12 @@ jobs:
            ls
          fi
 
-      - name: Log into registry ${{ env.REGISTRY }}
-        if: (github.event_name != 'pull_request')
-        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Push image
+      - name: Push image to github registry
+        uses: actions/checkout@v3
         env:
           keepgoing: ${{ env.keepgoing }}
         run: |         
             if [[ "${keepgoing}" == "true" ]]; then
+                echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
                 singularity push container.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
             fi
