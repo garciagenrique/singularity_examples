@@ -100,5 +100,5 @@ jobs:
                 echo "IMAGE_NAME will be {CONTAINER_NAME}:"
                 echo "IMAGE_NAME=$CONTAINER_NAME"
                 echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-                singularity push $CONTAINER_NAME.sif oras://ghcr.io/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${tag}
+                singularity push $CONTAINER_NAME.sif oras://ghcr.io/${GITHUB_REPOSITORY}-${IMAGE_NAME}:${tag}
             fi
