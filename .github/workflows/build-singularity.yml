@@ -73,7 +73,8 @@ jobs:
          if [ -f "${{ matrix.recipe }}" ]; then
             CONTAINER_NAME=${{ matrix.recipe }}
             CONTAINER_NAME="${CONTAINER_NAME%.*}"
-            echo "container name: $CONTAINER_NAME"
+            echo "container name is $CONTAINER_NAME."
+            echo "CONTAINER_NAME=$CONTAINER_NAME" >> $GITHUB_ENV
             sudo -E singularity build $CONTAINER_NAME.sif ${{ matrix.recipe }}
             tag=$(echo "${recipe/Singularity\./}")
             if [ "$tag" == "Singularity" ]; then
@@ -97,5 +98,5 @@ jobs:
         run: |         
             if [[ "${keepgoing}" == "true" ]]; then
                 echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-                singularity push container.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
+                singularity push $CONTAINER_NAME.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
             fi
