@@ -92,14 +92,13 @@ jobs:
          fi
 
       - name: Push image to github registry
-        #uses: actions/checkout@v3
         env:
           keepgoing: ${{ env.keepgoing }}
         run: |         
             if [[ "${keepgoing}" == "true" ]]; then
-                pwd
-                ls
                 echo "GITHUB_REPOSITORY is ${GITHUB_REPOSITORY}"
+                echo "IMAGE_NAME will be {CONTAINER_NAME}:"
+                echo "IMAGE_NAME=$CONTAINER_NAME"
                 echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-                singularity push $CONTAINER_NAME.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
+                singularity push $CONTAINER_NAME.sif oras://ghcr.io/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${tag}
             fi
