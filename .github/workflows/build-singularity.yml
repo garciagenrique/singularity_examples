@@ -8,7 +8,8 @@ jobs:
   build-test-containers:
     runs-on: ubuntu-latest
     container:
-      image: quay.io/singularity/singularity:v3.8.3
+      # image: quay.io/singularity/singularity:v3.8.3
+      image: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -36,8 +37,7 @@ jobs:
       - name: Install Dependencies
         if: ${{ env.keepgoing == 'true' }}
         run: |
-          # Slim image is Alpine based ?
-          sudo apk update && sudo apk add -y \
+          sudo ap-get update && sudo apt-get install -y \
             build-essential \
             libssl-dev \
             uuid-dev \
