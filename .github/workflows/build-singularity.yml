@@ -36,7 +36,7 @@ jobs:
       - name: Install Dependencies
         if: ${{ env.keepgoing == 'true' }}
         run: |
-          sudo ap-get update && sudo apt-get install -y \
+          sudo apt-get update && sudo apt-get install -y \
             build-essential \
             libssl-dev \
             uuid-dev \
