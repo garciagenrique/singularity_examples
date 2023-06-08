@@ -10,7 +10,7 @@ This is an example repository showing how to:
 ## GitHub Actions setup
 
 To allow the workflow publish to the GitHub registry, provide the workflow with the correct permissions.
- - Go to the tab `:gear: Settings > Actions > General > Workflow permissions`, and change the default ones to `Read and write permissions`. 
+ - Go to the tab: :gear: `Settings > Actions > General > Workflow permissions`, and change the default ones to `Read and write permissions`. 
  - Save the changes.
 
  ---------------------------------
