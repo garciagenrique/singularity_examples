@@ -2,7 +2,12 @@ name: Singularity Build (manual)
 on: 
   push:
     branches:
-      - singularity_ci # main
+      -  main
+
+env:
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}-workflow-orchestrator
 
 jobs:
   build-test-containers:
@@ -94,8 +99,6 @@ jobs:
       - name: Push image to github registry
         env:
           keepgoing: ${{ env.keepgoing }}
-          REGISTRY: ghcr.io
-          IMAGE_NAME: ${{ github.repository }}-workflow-orchestrator
         run: |         
             if [[ "${keepgoing}" == "true" ]]; then
                 # echo "GITHUB_REPOSITORY is ${GITHUB_REPOSITORY}"
@@ -104,6 +107,7 @@ jobs:
                 echo "REGISTRY is $REGISTRY"
                 echo "IMAGE_NAME is $IMAGE_NAME"
                 echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
+                # Both ways of pushing images works indeed
                 # singularity push $CONTAINER_NAME.sif oras://ghcr.io/${GITHUB_REPOSITORY}-${IMAGE_NAME}:${tag}
                 singularity push $CONTAINER_NAME.sif oras://${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${tag}
             fi
