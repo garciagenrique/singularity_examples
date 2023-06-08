@@ -7,9 +7,8 @@ on:
 jobs:
   build-test-containers:
     runs-on: ubuntu-latest
-    container:
+    # container:
       # image: quay.io/singularity/singularity:v3.8.3
-      image: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
