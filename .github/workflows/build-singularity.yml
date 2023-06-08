@@ -91,7 +91,7 @@ jobs:
          fi
 
       - name: Push image to github registry
-        uses: actions/checkout@v3
+        #uses: actions/checkout@v3
         env:
           keepgoing: ${{ env.keepgoing }}
         run: |         
