@@ -21,9 +21,24 @@ To allow the workflow publish to the GitHub registry, provide the workflow with 
     - Check the `Admin Guide` of the [version](https://sylabs.io/docs/) you'd want to install
  - Clone this repository and run
  ```bash 
- ./build_container.sh
+$ ./build_container.sh
  ```
 
- ## Download the Singularity image
+ ## Download and execute the Singularity image
+ 
+ Use the `singularity pull` command together with the GitHub registry URL, as the example below shows - don't forget about the `oras://` protocol before the URL !
 
-TBD
+```bash
+$ singularity pull oras://ghcr.io/garciagenrique/singularity_examples-workflow-orchestrator:dev
+INFO:    Downloading oras image
+$ ls 
+singularity_examples-workflow-orchestrator_dev.sif
+
+$ singularity run singularity_examples-workflow-orchestrator_dev.sif
+Python 3.9.17
+packages installed:
+cwltool~=3.1
+pyyaml~=6.0
+omegaconf~=2.3
+pytest~=7.3.1
+```
